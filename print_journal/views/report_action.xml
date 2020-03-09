@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<report
+    id="journal_items_rep"
+    model="account.move"
+    string="طباعــــه قــيد دفتر اليوميــه"
+    report_type="qweb-pdf"
+    name="print_journal.report_journal_document"
+    file="print_journal.report_journal_document"
+     
+/>
+
+</odoo>

@@ -1,0 +1,66 @@
+from odoo import api, fields, models, _
+import odoo.addons.decimal_precision as dp
+from odoo.exceptions import ValidationError,UserError
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, float_compare
+import datetime as dt
+from datetime import datetime, timedelta
+import calendar
+import time
+import re
+from odoo.addons import decimal_precision as dp
+from dateutil import relativedelta
+import logging
+_logger = logging.getLogger(__name__)
+from odoo.tools import email_re, email_split, email_escape_char, float_is_zero, float_compare, \
+    pycompat, date_utils
+
+class sale_custom(models.Model):
+    _inherit="sale.order.line"
+    note_sale=fields.Char('ملاحظات')
+    analytical_account_id=fields.Many2one(related='order_id.analytic_account_id',string="الحساب التحليلي")
+
+    
+   
+    
+
+class purchase_custom(models.Model):
+    _inherit="purchase.order.line"
+    note_purchase=fields.Char('ملاحظات')
+class sale_order_custom(models.Model):
+    _inherit='sale.order'
+    @api.depends('picking_ids')
+    def _compute_picking_ids(self):
+        sales_order=self.env['sale.order'].search([])
+        for order in sales_order:
+            
+            for rec in order.picking_ids:
+                stock=self.env['stock.move'].search([('picking_id','=',rec.id)])
+                 
+                for st in stock:
+                    st.write({
+                      'date':order.date_order })
+                    _logger.info(st)
+
+        for order in self:
+            order.delivery_count = len(order.picking_ids)
+            for rec in order.picking_ids:
+                stock=self.env['stock.move'].search([('picking_id','=',rec.id)])
+                 
+                for st in stock:
+                    st.write({
+                      'date':order.date_order })
+                    _logger.info(st)
+                 
+
+
+     
+            
+             
+
+ 
+                  
+             
+         
+        
+ 
+    

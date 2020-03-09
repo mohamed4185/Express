@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="action_report_product_qty_inv"
+            model="periodical.report.purchase"
+            string= "كشف بارصده الاصناف التي لها رصيد"
+            report_type="qweb-pdf"
+            name="product_qty_inventory.report_product_qty_inventory"
+            file="product_qty_inventory.report_product_qty_inventory"
+            />
+    </data>
+</odoo>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="wiz_partner_balance_view" model="ir.ui.view">
+		<field name="name">wiz_total_size_product_report_view</field>
+		<field name="model">partner.balance</field>
+		<field name="arch" type="xml">
+			<form>
+				  <sheet>
+					<div class="oe_title">
+						<h1 attrs="{'invisible':[('vendor_mode','=',True)]}" >   كشـــــف حساب عمـــــلاء مدنيون</h1>
+						<h1 attrs="{'invisible':[('vendor_mode','=',False)]}">   كشـــــف حساب مــــوردين دائنون</h1>
+					</div>
+					<br/>
+				<group col="4">
+					<field name="date_from" />
+					<field name="date_to" />
+					<field name="vendor_mode" string="مـــوردين"/>
+				</group>
+				<group>
+				  
+				   <field name="partner" string="المـــــورد"  attrs="{'invisible':[('vendor_mode','=',False)]}"/>
+				    <field name="partner" string="العمــــــيل" attrs="{'invisible':[('vendor_mode','=',True)]}"/>
+				   
+				   <field name="analytical_account_id"/>
+				</group>
+				 
+				<footer>
+					<button name="check_report" string="Print" type="object" default_focus="1" class="oe_highlight" />
+					or
+					<button string="Cancel" class="oe_link" special="cancel" />
+				</footer>
+				  </sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_partner_balance_view_wizard" model="ir.actions.act_window">
+		<field name="name">   كشـــــف حساب عميل مدنيون</field>
+		<field name="res_model">partner.balance</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="wiz_partner_balance_view"/>
+		<!--<field name="target">new</field>-->
+		<field name="target">inline</field>
+	</record>
+
+ 
+
+</odoo>

@@ -1,0 +1,9 @@
+{
+            'name':'Report Express',
+            'category':'Report',
+            'depends':['bank_cheques','customer_cheques','customer_statement','move_product_in','move_product_out','move_product_out_to_in','periodical_purchase_report','periodical_sales_report','print_journal','product_move','product_qty_inventory','sales_express','total_purchases_product','total_sales_customer','total_sales_product','total_size_sales','vendor_statement','account_parent','chart_account_customization','check_management_express','customer_code'],
+            'application':True,
+            'author':'BBL',
+            'data':['views/report_list_menu.xml','views/list_report_action.xml',]
+
+}

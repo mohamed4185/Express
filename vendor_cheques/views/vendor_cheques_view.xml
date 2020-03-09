@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="action_report_vendor_cheques"
+            model="vendor.cheques"
+            string="بيـــان بشيكات مورد"
+            report_type="qweb-pdf"
+            name="vendor_cheques.vendor_cheques_report"
+            file="vendor_cheques.vendor_cheques_report"
+            />
+    </data>
+</odoo>

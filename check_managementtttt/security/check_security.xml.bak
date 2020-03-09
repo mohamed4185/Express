@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+     
+
+
+
+
+    <record id="normal_payment_checks" model="ir.rule">
+    <field name="name">normal_payment_checks</field>
+    <field name="model_id" ref="check_managementtttt.model_normal_payments"/> 
+
+    <field name="perm_read" eval="True"/>
+    <field name="perm_create" eval="True"/>
+    <field name="perm_write" eval="True"/>
+    <field name="perm_unlink" eval="True"/>
+	<field name="domain_force">['|',('partner_id.company_id','=',False),('partner_id.company_id','child_of',[user.company_id.id])]</field>
+
+    
+</record>
+
+  
+</odoo>

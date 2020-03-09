@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="sale_order_report"
+            model="sale.order"
+            string="امر مبيعات"
+            report_type="qweb-pdf"
+            name="sales_order.sales_order"
+            file="sales_order.sales_order"
+     />
+	 </data>
+</odoo>

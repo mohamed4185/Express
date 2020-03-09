@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="action_report_periodical_sales"
+            model="periodical.report.wizard"
+            string="بيان بالمبيعات اليومية"
+            report_type="qweb-pdf"
+            name="periodical_sales_report.report_periodical_sales"
+            file="periodical_sales_report.report_periodical_sales"
+            />
+    </data>
+</odoo>

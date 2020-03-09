@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="wiz_total_size_customer_report_view" model="ir.ui.view">
+		<field name="name">wiz_total_size_customer_report_view</field>
+		<field name="model">total.sales.bar.customer</field>
+		<field name="arch" type="xml">
+			<form>
+				  
+				<group col="4">
+					<field name="date_from" />
+					<field name="date_to" />
+				</group>
+				<group>
+				   <field name="customer"/>
+				   <field name="product"/>
+				</group>
+				 
+				<footer>
+					<button name="check_report" string="Print" type="object" default_focus="1" class="oe_highlight" />
+					or
+					<button string="Cancel" class="oe_link" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_sales_total_size_customer_report_wizard" model="ir.actions.act_window">
+		<field name="name">بيان بالعملاءالمتعامل معهم علي مستوي صنف</field>
+		<field name="res_model">total.sales.bar.customer</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="wiz_total_size_customer_report_view"/>
+		<field name="target">inline</field>
+	</record>
+
+	 <!--<menuitem id="menu_sale_size_bar_customer_report"
+                             name="بيان بالعملاء المتعامل  معهم علي مستوي صنف"
+
+                  action="action_sales_total_size_customer_report_wizard"
+                  parent="sale.menu_sale_report"
+                  sequence="1"/>-->
+
+</odoo>

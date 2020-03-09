@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_periodical_sales">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <br/>
+                <t t-if="date_from and date_to">
+                    <p class="text-center">بيان بالتوريدات اليومية <span t-esc="date_from"/> <span> to date</span> <span t-esc="date_to"/></p>
+                </t>
+                <t t-elif="period">
+                    <p class="text-center"><span>بيان بالتوريدات اليومية  </span><span t-esc="period"/></p>
+                </t>
+                <div class="text-right">
+                    
+                        
+                            <t t-set="product_category" t-value="[]"/>
+                            <t t-set="customer_list" t-value="[]"/>
+							<t t-set="total" t-value="0"/>
+								<t t-foreach="sale_orders" t-as="l">
+
+									<t t-set="product_category" t-value="product_category+[l['date_order'].strftime('%d-%m-%Y')]"/>
+                                    <t t-set="customer_list" t-value="customer_list+[l['partner']]"/>
+								</t>
+								        <t t-foreach="set(product_category)" t-as="category">
+                                        <t t-foreach="set(customer_list)" t-as="customer">
+										
+										        <div><strong class="text-right">تاريخ اليوم /</strong><strong class="text-right" t-esc="category"/></div>
+                                                <div><strong  class="text-right" t-esc="customer"/><strong class="text-right">اسم العميل /</strong></div>
+												
+												<table align="right" class="table table-condensed">
+													<thead>
+														<tr>
+														   <th class="text-right">إجمالي</th>
+														   <th class="text-right">قيمة الوحدة</th>
+														   <th class="text-right">طن</th>
+														   <th class="text-right">رقم الاذن</th>
+															<th class="text-right">الصنف</th>
+															
+															
+															
+															
+														</tr>
+													</thead>
+													<tbody>
+													<t t-set="total" t-value="0"/>
+													<t t-set="total_qty" t-value="0"/>
+											<tr t-foreach="sale_orders" t-as="order">
+
+												<t t-if="category==order['date_order'].strftime('%d-%m-%Y') and customer==order['partner'] ">
+                                                    <td class="text-right" style="white-space: text-nowrap;">
+														<span  t-esc="order['total']"  />
+													</td>
+													<td class="text-right" style="white-space: text-nowrap;">
+														<span t-esc="order['price_unit']" />
+													</td>
+													<td class="text-right" style="white-space: text-nowrap;">
+														<span t-esc="order['quantity']" />
+													</td>
+													<td class="text-right" style="white-space: text-nowrap;">
+														<span t-esc="order['order_id']" />
+													</td>
+													 <td>
+														<span t-esc="order['name']" />
+													</td>
+													
+													
+													
+													
+													<t t-set="total" t-value="total+order['total']"/>
+													<t t-set="total_qty" t-value="total_qty+order['quantity']"/>
+												</t>
+
+											</tr>
+
+                                        
+                            <tr>
+                                
+							      
+								 <td class="text-right" style="white-space: text-nowrap;">
+                                    <b><span t-esc="total" /></b>
+                                </td>
+								<td class="text-right"><b><span t-esc="total_qty" /></b></td>
+                                <td></td>
+								 <td></td>
+                                <td class="text-right"><b>اجمالي علي مستوي العميل </b></td>
+								 
+                                
+								
+								
+                            </tr>
+                        </tbody>
+                    </table>
+					</t>
+					</t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

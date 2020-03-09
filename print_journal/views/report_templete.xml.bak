@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_journal_print_data_edit">
+                   <t t-call="web.external_layout">
+					<div class="page">
+				    <h2 style="text-align:center;color:grey">قيــد دفتر اليوميـــه : <span t-esc="doc.date"/></h2>
+                      
+					<table class="table table-bordered" style="width:100%;text-align:center;padding-left:20px;padding-right:20px">
+					<thead>
+					<tr  >
+					        
+							<th style="width:30px">الدائـــن</th>
+							<th style="width:30px">المديـــن</th> 
+							<th style="width:100px">الصنـــف</th>
+							<th style="width:100px">اســــم العميـــل </th>
+							<th style="width:30px">الحساب التحليلي </th>
+							<th style="width:30px">رقـــــم الحســـــاب </th>
+							<th style="width:70px">اســـم الحســـــاب</th>
+							<th style="width:70px">التـــاريــخ</th>
+							<th style="width:70px">رقــم الحركــــه</th>
+							<!--<th style="width:30px"> م</th>-->
+						  </tr></thead>
+						  <t t-set="i" t-value="0"/>
+						  <t t-set="id" t-value="0"/>
+						  <tbody>
+						  
+                       <t t-foreach="doc.line_ids.sorted(key=lambda x:x.credit)" t-as="o">
+
+					    
+						 <t t-set="id" t-value="1"/>
+						  
+						  <tr>
+						  
+                           <td>
+						   <span t-field="o.credit" style="padding:5px; text-overflow: ellipsis;"/>
+						   </td>
+                            <td>
+						   <span t-field="o.debit" style="padding:5px; text-overflow: ellipsis;"/>
+						   </td>
+						   <td>
+						   <span t-field="o.name" style="padding:5px; text-overflow: ellipsis;"/>
+						   </td>
+						   <td>
+						   <span t-field="o.partner_id" style="padding:5px; text-overflow: ellipsis;"/>
+						   </td>
+						   <td>
+						   <span t-field="o.analytic_account_id.name" style="padding:5px; text-overflow: ellipsis;"/>
+						   </td>
+						   <td>
+						   <span t-field="o.account_id.code" style="padding:5px; text-overflow: ellipsis;"/>
+						   </td>
+						   <td>
+						   <span t-field="o.account_id" style="padding:5px; text-overflow: ellipsis;"/>
+						   </td>
+						   <td>
+						   <span t-field="o.move_id.date" style="padding:5px; text-overflow: ellipsis;"/>
+						   </td>
+						   <td>
+						   <span t-field="o.move_id.name" style="padding:5px; text-overflow: ellipsis;"/>
+						   </td>
+						   <!--<td>
+						   <span t-esc="i" style="padding:5px; text-overflow: ellipsis;"/>
+						   </td>-->
+
+						  </tr> </t>
+
+
+						  </tbody>
+						  </table>
+						  </div>
+						  </t>
+					  
+					 
+                    
+                 
+         
+    
+</template>
+
+<!-- Translatable template -->
+ 
+
+<template id="report_journal_document">
+        
+          <t t-call="web.html_container">
+		  
+		       		     
+
+                
+                  <t t-foreach="docs" t-as="doc">
+				  
+                   
+					    
+                        
+                        <t t-call="print_journal.report_journal_print_data_edit">
+						     
+                             
+                    </t>
+					</t>
+					 
+                
+				 
+            
+			</t>
+    </template>
+	<record id="print_journal.journal_items_rep" model="ir.actions.report">
+    <field name="paperformat_id" ref="move_product_in_to_out.paperformat_lowmargin" />
+</record>
+	
+        
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="stock_report_dashboard_view" model="ir.ui.view">
+            <field name="name">stock.report.dashboard.view</field>
+            <field name="model">stock.report</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <dashboard>
+                    <view type="graph" ref="stock_enterprise.stock_report_graph_view"/>
+                    <group col="1">
+                        <group col="4">
+                            <aggregate name="delivery_time_avg" string="Deliveries Cycle Time" field="cycle_time" group_operator="avg" domain="[('picking_type_code', '=', 'outgoing')]" domain_label="Done Deliveries" help="Time needed to deliver an order (in days). Computed by comparing the creation date of the delivery order and its done date." value_label="day(s)"/>
+                            <aggregate name="receipt_time_avg" string="Receipts Cycle Time" field="cycle_time" group_operator="avg" domain="[('picking_type_code', '=', 'incoming')]" domain_label="Done Receipts" help="Time needed to receive an order (in days). Computed by comparing the creation date of the receipt and its done date." value_label="day(s)"/>
+                            <aggregate name="delivery_create_date" string="Deliveries Delay" field="delay" group_operator="avg" domain="[('picking_type_code', '=', 'outgoing')]" domain_label="Done Deliveries" help="Delay to deliver an order (in days). Computed by comparing the scheduled date of the delivery order and its effective date." value_label="day(s)"/>
+                            <aggregate name="receipt_create_date" string="Receipts Delay" field="delay" group_operator="avg" domain="[('picking_type_code', '=', 'incoming')]" domain_label="Done Receipts" help="Delay to receive an order (in days). Computed by comparing the scheduled date of the receipt and its effective date." value_label="day(s)"/>
+                        </group>
+                    </group>
+                    <view type="pivot" ref="stock_enterprise.stock_report_pivot_view"/>
+                    <view type="cohort" ref="stock_enterprise.stock_report_cohort_view"/>
+                </dashboard>
+            </field>
+        </record>
+        <record id="stock_report_dashboard_action" model="ir.actions.act_window">
+            <field name="name">Warehouse Dashboard</field>
+            <field name="res_model">stock.report</field>
+            <field name="view_mode">dashboard</field>
+            <field name="view_id" ref="stock_report_dashboard_view"/>
+            <field name="search_view_id" ref="stock_enterprise.stock_report_search_view"/>
+            <field name="domain" eval="[('picking_type_code', '!=', False)]"/>
+            <field name="context">{'search_default_done': 1, 'time_ranges': {'field':'date_done', 'range':'last_30_days'}}</field>            <!-- Use context keys for cohort view -->
+        </record>
+
+        <menuitem id="stock_enterprise.stock_dashboard_menuitem" name="لوحة عرض المخزون" parent="stock.menu_warehouse_report" action="stock_report_dashboard_action"/>
+    </data>
+</odoo>

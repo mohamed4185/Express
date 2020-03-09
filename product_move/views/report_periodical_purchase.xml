@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_product_move">
+        <t t-call="web.html_container">
+            <br/>
+            <t t-set="product_category" t-value="[]"/>
+            <t t-set="customer_list" t-value="[]"/>
+            <t t-set="total" t-value="0"/>
+            <t t-set="pro" t-value="0"/>
+            <t t-foreach="moves" t-as="l">
+                <t t-set="product_category" t-value="product_category+[l['product_id']]"/>
+                <t t-set="customer_list" t-value="customer_list+[l['partner']]"/>
+            </t>
+            <t t-if="data_check==True">
+                <t t-call="web.external_layout">
+                    <div class="page"> 
+                        <p class="text-center">
+    						<br/>
+	    					<br/>
+                            <b>لا يــوجــد بيانـــــــــــات</b>
+                        </p>
+                    </div>
+                </t>
+            </t>
+            <t t-if="data_check==False">
+                <t t-foreach="set(product_category)" t-as="category">
+                    <t t-set="i" t-value="0"/>
+                    <t t-foreach="moves" t-as="order">
+                        <t t-if="category==order['product_id']">
+                            <t t-set="pro" t-value="order['id']"/>
+                        </t>
+                    </t>
+                    <t t-call="web.external_layout">
+                        <div class="page">
+
+						<br></br><br></br>
+
+                            <br/>
+							<br/>
+
+                            <div class="text-right"> 
+                                <div>
+                                    <strong class="text-right"> اسم الصنف :</strong>
+                                    <strong style="padding: 1em;" t-esc="category"/>
+                                    <br></br>
+                                    <strong class="text-right"> رقم الصنف :</strong>
+                                    <span style="padding: 1em;" t-esc="pro" />
+                                </div>
+                                <table align="right" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:center;width:20%">التاريخ</th>
+                                            <th style="text-align:center;width:7%">رقم الاذن</th>
+                                            <th style="text-align:center;width:20%">البيان												
+                                                <br></br>ملاحظات
+											
+                                            </th>
+                                            <th style="text-align:center;width:10%">رصيد</th>
+                                            <th style="text-align:center;width:7%"> منصرف</th>
+                                            <th style="text-align:center;width:7%">وارد</th>
+                                            <th style="text-align:center;width:7%">م</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="diff" t-value="0"/>
+                                        <t t-set="total_sale" t-value="0"/>
+                                        <t t-set="total_purchase" t-value="0"/>
+                                        <t t-set="total_diff" t-value="0"/>
+                                        <tr t-foreach="moves" t-as="order">
+                                            <t t-if="category==order['product_id']">
+                                                <t t-set="i" t-value="i+1"/>
+                                                <t t-if="order['sale_id'] ==False and order['purchase_id'] ==False ">
+                                                    <td style="text-align:center;white-space: text-nowrap;"></td>
+                                                    <td style="text-align:center;white-space: text-nowrap;"></td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <span t-esc="order['partner']" />
+                                                    </td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <t t-set="diff" t-value="round(diff+order['quantity'],3)"/>
+                                                    </td>
+                                                    <td style="text-align:center;white-space: text-nowrap;"></td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <span t-esc="round(order['quantity'],3)" />
+                                                    </td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <span t-esc="i" />
+                                                    </td>
+                                                </t>
+                                                <t t-if="order['sale_id'] !=False">
+                                                    <t t-set="total_sale" t-value="round(total_sale+order['quantity'],3)"/>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <span t-esc="order['date']" />
+                                                    </td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <span t-esc="order['so']" />
+                                                    </td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <span t-esc="order['partner']" />
+                                                        <br></br>
+                                                        <span t-esc="order['note_sale']" />
+                                                    </td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <t t-set="diff" t-value="round(diff-order['quantity'],3)"/>
+                                                        <span t-esc="round(diff,3)" />
+                                                    </td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <span t-esc="round(order['quantity'],3)" />
+                                                    </td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+																0.000 
+                                                    </td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <span t-esc="i" />
+                                                    </td>
+                                                </t>
+                                                <t t-if="order['purchase_id'] !=False">
+                                                    <t t-set="total_purchase" t-value="round(total_purchase+order['quantity'],3)"/>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <span t-esc="order['date']" />
+                                                    </td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <span t-esc="order['po']" />
+                                                    </td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <span t-esc="order['partner']"/>
+                                                        <br></br>
+                                                        <span t-esc="order['note_purchase']" />
+                                                    </td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <t t-set="diff" t-value="round(diff+order['quantity'],3)"/>
+                                                        <span t-esc="round(diff,3)" />
+                                                    </td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+																 0.000
+                                                    </td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <span t-esc="round(order['quantity'],3)" />
+                                                    </td>
+                                                    <td style="text-align:center;white-space: text-nowrap;">
+                                                        <span t-esc="i" />
+                                                    </td>
+                                                </t>
+                                                <t t-set="total_diff" t-value="total_diff+diff"/>
+                                            </t>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:center;white-space: text-nowrap;"></td>
+                                            <td style="text-align:center;white-space: text-nowrap;"></td>
+                                            <td style="text-align:center;white-space: text-nowrap;"></td>
+                                            <td style="text-align:center;white-space: text-nowrap;">
+                                                <b>
+                                                    <span t-esc="round(total_purchase-total_sale,3)" />
+                                                </b>
+                                            </td>
+                                            <td style="text-align:center;white-space: text-nowrap;">
+                                                <span t-esc="round(total_sale,3)" />
+                                            </td>
+                                            <td style="text-align:center;white-space: text-nowrap;">
+                                                <b>
+                                                    <span t-esc="round(total_purchase,3)" />
+                                                </b>
+                                            </td>
+                                            <td style="text-align:center;white-space: text-nowrap;">
+                                                <b>الاجمالي</b>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+    <record id="product_move.action_report_product_move" model="ir.actions.report">
+        <field name="paperformat_id" ref="move_product_in_to_out.paperformat_lowmargin" />
+    </record>
+</odoo>

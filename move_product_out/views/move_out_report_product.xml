@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="action_report_move_out_product"
+            model="move.out.product"
+            string="بيان حركه صنف منصرف"
+            report_type="qweb-pdf"
+            name="move_product_out.report_move_out_product"
+            file="move_product_out.report_move_out_product"
+            />
+    </data>
+</odoo>

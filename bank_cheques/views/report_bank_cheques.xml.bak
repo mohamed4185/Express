@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="bank_cheques_report">
+       <t t-call="web.html_container">
+             
+                <br/>
+                 
+					
+					 
+                    <t t-if="data_check==True">
+					  <t t-call="web.external_layout">
+								        <div class="page">
+								         <div class="text-right">
+					  <br/>
+					  <br/>
+					  <p class="text-center"><b>لا يــوجــد بيانـــــــات</b></p>
+					  </div></div></t>
+					</t>
+                 
+                
+                    
+                        
+                            <t t-set="product_category" t-value="[]"/>
+							<t t-set="product_list" t-value="[]"/>
+                            <t t-set="customer_list" t-value="[]"/>
+							<t t-set="total" t-value="0"/>
+							            
+                                         <t t-set="all_total_qty" t-value="0"/>
+										<t t-set="all_total_price" t-value="0"/>
+										<t t-set="i" t-value="0"/>
+										<t t-call="web.external_layout">
+								        <div class="page">
+								         <div class="text-right">
+										<t t-if="data_check==False"> 
+										
+										 <table align="right" class="table table-bordered">
+
+													<thead>
+														<tr>
+														 
+														  
+														   <th  style="white-space: text-nowrap;text-align:center;width:70px;height:10px">المبلـــغ </th>
+														   <t t-if="issue_type==False">
+														   <th  style="white-space: text-nowrap;text-align:center;width:70px;height:10px">اســـم العميـــل 
+														   </th>
+														   </t>
+														   <t t-if="issue_type==True">
+														   <th  style="white-space: text-nowrap;text-align:center;width:70px;height:10px">اســـم المـــــورد 
+														   </th>
+														   </t>
+														   <th  style="white-space: text-nowrap;text-align:center;width:70px;height:10px">حــاله الشيــك</th>
+                                                            
+														    
+															 <th style="white-space: text-nowrap;text-align:center;width:70px;height:10px">تاريخ استحقاق </th>
+															<th style="white-space: text-nowrap;text-align:center;width:70px;height:10px">تـــاريخ الادخـــال</th>
+                                                            <th style="white-space: text-nowrap;text-align:center;width:70px;height:10px">رقــــم الحركه</th>
+															<th style="white-space: text-nowrap;text-align:center;width:70px;height:10px">رقم الشــيك</th>
+															 <t t-if="issue_type==False">
+															<th style="white-space: text-nowrap;text-align:center;width:100px;height:10px">البنك المودع بــه</th></t>
+															<th style="white-space: text-nowrap;text-align:center;width:100px;height:10px">البنك المسحوب عليه</th>
+															<th  style="white-space: text-nowrap;text-align:center;width:30px;height:10px" > م</th>
+															
+															
+															
+														</tr>
+													</thead>
+													 
+													<tbody>
+												  
+													<t t-set="total_price" t-value="0"/>
+													<t t-set="total_qty" t-value="0"/>
+													 
+													<t t-set="i" t-value="0"/>
+											 
+											<t t-foreach="cheques" t-as="order">
+                                                
+												 
+												   <t t-set="total_price" t-value="total_price+order['total']"/>
+													 
+												    <t t-set="i" t-value="i+1"/>
+													<tr>
+													    	 
+														 <td style="white-space: text-nowrap;text-align:center;width:70px">
+																	 <span t-esc="order['total']" />
+																</td>
+															 
+																<td style="white-space: text-nowrap;text-align:center;width:70px">
+																	 <span t-esc="order['partner']" />
+																</td>
+																<td style="white-space: text-nowrap;text-align:center;width:70px">
+																	 
+																	 <span t-esc="order['state']" />
+																</td>
+																<td style="white-space: text-nowrap;text-align:center;width:70px">
+																	 <span t-esc="order['cheque_date']" />
+																</td>
+																<td style="white-space: text-nowrap;text-align:center;width:70px">
+																	 <span t-esc="order['check_payment']" />
+																</td>
+																<td style="white-space: text-nowrap;text-align:center;width:70px">
+																	 <span t-esc="order['name']" />
+																</td>
+																<td style="white-space: text-nowrap;text-align:center;width:70px">
+																	 <span t-esc="order['cheque_number']" />
+																</td>
+																 <t t-if="issue_type==False">
+																<td style="white-space: text-nowrap;text-align:center;width:100px">
+																	 <span t-esc="order['bank_deposite']" />
+																</td></t>
+																<td style="white-space: text-nowrap;text-align:center;;width:100px">
+																	 <span t-esc="order['check_bank']" />
+																</td>	
+																 
+																<td style="white-space: text-nowrap;text-align:center;;width:30px">
+																	<span t-esc="i" />
+																</td>
+
+												</tr>
+											    
+											    
+										 
+												
+											 
+										</t>
+										
+                                     
+												
+                                        
+									<tr>     
+									                    
+													     <td style="white-space: text-nowrap;text-align:center;width:70px">
+																	 <b><span t-esc="total_price" /></b>
+																</td>
+														 <td style="white-space: text-nowrap;text-align:center;width:70px">
+																	  
+																</td>
+															 
+																 
+																<td style="white-space: text-nowrap;text-align:center">
+																	 
+																</td>
+																
+																<td style="white-space: text-nowrap;text-align:center">
+																	  
+																</td>
+																<td style="white-space: text-nowrap;text-align:center">
+																	  
+																</td>
+																<td style="white-space: text-nowrap;text-align:center">
+																	  
+																</td>
+																<td style="white-space: text-nowrap;text-align:center">
+																	 
+																</td>
+																<td style="white-space: text-nowrap;text-align:center">
+																	 
+																</td>	
+																 
+																<td>
+																	 
+																</td>
+
+												</tr>
+
+                        </tbody>
+						 
+					 	
+                    </table></t>
+					</div>
+              </div> 
+                
+            </t>
+        </t>
+    </template>
+	 <record id="bank_cheques.action_report_bank_cheques" model="ir.actions.report">
+    <field name="paperformat_id" ref="move_product_in_to_out.paperformat_lowmargin" />
+</record>
+	 
+</odoo>

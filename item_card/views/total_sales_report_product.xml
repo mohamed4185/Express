@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="action_item_card_report"
+            model="item.card"
+            string="تكلفه صرف اصناف علي معدات"
+            report_type="qweb-pdf"
+            name="item_card.item_card_product"
+            file="item_card.item_card_product"
+            />
+    </data>
+</odoo>

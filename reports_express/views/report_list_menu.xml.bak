@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="report_list_form" model="ir.ui.view">
+		<field name="name">report_list_tree</field>
+		<field name="model">list.rep.express</field>
+		<field name="arch" type="xml">
+			<form create="false" edit="false">
+			  <field name="name" invisible="1"/>
+			</form>
+		</field>
+	</record>
+
+	 
+	
+   <menuitem id="menu_list_report"
+                  name="تقارير"
+				 
+                  
+                   />
+     <menuitem id="menu_sale_periodical_report"
+                  name="بيان بالمبيعات اليومية"
+                  action="periodical_sales_report.action_periodical_report_wizard"
+                  parent="menu_list_report"
+                  sequence="1"/>
+     <menuitem id="menu_purchase_periodical_report"
+                  name="بيان بالتوريدات اليومية"
+                  action="periodical_purchase_report.action_periodical_report_purchase"
+                  parent="menu_list_report"
+                  sequence="2"/>
+     <menuitem id="menu_sale_size_bar_customer_report"
+                  name="اجمالي حجم المبيعات خلال فتره علي مستوي المصانع"
+                  action="total_sales_product.action_sales_total_size_product_report_wizard"
+                  parent="menu_list_report"
+                  sequence="3"/>
+	<menuitem id="menu_purchase_size_bar_customer_report"
+                  name="اجمالي حجم المشريات خلال فتره علي مستوي المصانع"
+                  action="total_purchases_product.action_sales_total_purchase_product_report_wizard"
+                  parent="menu_list_report"
+                  sequence="4"/>
+	<menuitem id="menu_sale_size_report"
+                  name="بيان بحجم المبيعات خلال فتره علي مستوي العملاء"
+                  action="total_size_sales.action_sales_total_size__report_wizard"
+                  parent="menu_list_report"
+                  sequence="5"/>
+	 <menuitem id="menu_sale_size_bar_product_report"
+                             name="بيان بالعملاء المتعامل  معهم علي مستوي صنف"
+
+                  action="total_sales_customer.action_sales_total_size_customer_report_wizard"
+                  parent="menu_list_report"
+                  sequence="6"/>
+	 <menuitem id="move_product_out.menu_move_out_product_menu_report"
+                  name="بيان حركه صنف منصرف"
+                  action="move_product_out.action_move_out_product_report_wizard"
+                  parent="menu_list_report"
+                  sequence="7"/>
+	 <menuitem id="menu_move_in_product_menu_report"
+                  name="بيان حركه صنف وارد"
+                  action="move_product_in.action_move_in_product_report_wizard"
+                  parent="menu_list_report"
+                  sequence="8"/>
+
+	 <menuitem id="menu_product_move_report"
+                  name="كارت الصنف"
+                  action="product_move.action_product_report_move"
+                  parent="menu_list_report"
+                  sequence="9"/>
+
+	   <menuitem id="menu_productqty_inv_report"
+                  name="كشف بارصده الاصناف التي لها رصيد"
+                  action="product_qty_inventory.action_product_qt_inv_report_move"
+                  parent="menu_list_report"
+                  sequence="10"/>
+		<menuitem id="menu_move_out_in_menu_report"
+                  name="بيان حركه صنف لعميل مقابل الموردين"
+				  action="move_product_out_to_in.action_move_out_in_product_report_wizard"
+                  parent="menu_list_report"
+                  sequence="11"/>
+
+		<menuitem id="menu_move_in_out_menu_report"
+                  name="بيان حركه صنف لمورد مقابل العملاء"
+				  action="move_product_in_to_out.action_move_in_out_product_report_wizard"
+                  parent="menu_list_report"
+                  sequence="12"/>
+         <menuitem id="menu_bank_cheques_report"
+                  name="بيــان بشيــكـات بنــــك"
+                  action="bank_cheques.action_bank_cheques_view_wizard"
+                  parent="menu_list_report"
+                  sequence="13"/>
+				  <menuitem id="menu_customer_statement_report"
+                  name="كشـــف حســــاب عميـل"
+                  action="customer_statement.action_customer_statment_view_wizard"
+                  parent="menu_list_report"
+                  sequence="16"/>
+				  <menuitem id="menu_customer_statement_report_t"
+                  name=" T كشـــف حســــاب عميـل"
+                  action="customer_statement_t.action_customer_statment_view_wizard_t"
+                  parent="menu_list_report"
+                  sequence="17"/>
+				  <menuitem id="menu_vendor_statement_report_t"
+                  name=" T كشـــف حســــاب مـــــورد "
+                  action="vendor_statement_t.action_vendor_statment_view_wizard_t"
+                  parent="menu_list_report"
+                  sequence="17"/>
+	    <menuitem id="menu_customer_cheques_report"
+                  name=" بيــان بشيــكـات عميــل"
+                  action="customer_cheques.action_customer_cheques_view_wizard"
+                  parent="menu_list_report"
+                  sequence="14"/>
+      <menuitem id="menu_vendor_cheques_report"
+                  name=" بيــان بشيــكـات مورد"
+                  action="vendor_cheques.action_vendor_cheques_view_wizard"
+                  parent="menu_list_report"
+                  sequence="15"/>
+				   <menuitem id="menu_vendor_statement_report"
+                  name="كشـــف حســــاب مـــورد"
+                  action="vendor_statement.action_vendor_statment_view_wizard"
+                  parent="menu_list_report"
+                  sequence="15"/>
+				  <menuitem id="menu_partner_balance_report"
+                  name="بيـــــان اجمالي المدنيون او الدائون"
+                  action="partner_balance.action_partner_balance_view_wizard"
+                  parent="menu_list_report"
+                  sequence="19"/>
+          <menuitem id="menu_total_transactions_report"
+                  name="كشــــف وارد وصـــادر خزينـــه"
+                  action="total_transactions.action_total_transactions_view_wizard"
+                  parent="menu_list_report"
+                  sequence="20"/>
+
+</odoo>

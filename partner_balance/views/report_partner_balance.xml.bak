@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="partner_balance_report">
+		<t t-call="web.html_container">
+
+
+			 
+			<t t-set="partner_list" t-value="[]"/>
+			<t t-set="total" t-value="0"/>
+			<t t-foreach="list_move" t-as="l">
+
+				<t t-set="partner_list" t-value="partner_list+[l['partner']]"/>
+
+			</t>
+
+			<t t-set="all_total_qty" t-value="0"/>
+			<t t-set="all_total_price" t-value="0"/>
+			<t t-set="i" t-value="0"/>
+			<t t-call="web.external_layout">
+				<div class="page">
+					<div class="text-right">
+
+
+						<t t-if="data_check==True">
+							 
+
+							<p class="text-center">
+								<br></br>
+								<b>لا يوجــد بيانـــــات</b>
+							</p>
+						</t>
+					</div>
+				</div>
+			</t>
+
+
+
+
+            <t t-call="web.external_layout">
+					<div class="page">
+				    <div class="text-right">
+                    <t t-if="data_check==False">
+								
+
+										<table align="right" class="table table-bordered">
+									<thead>
+									 <tr><th colspan="2" style="white-space: text-nowrap;text-align:center;width:15%">    رصيد اخر  الفتــــره</th>
+											
+											<th colspan="2" style="white-space: text-nowraptext-align:;center;width:30%">  رصيد خـــلال الحركه </th>									<th style="white-space: text-nowrap;text-align:center;width:10%"> </th>
+											<th colspan="2" style="white-space: text-nowrap;text-align:center;width:10%"> </th></tr>
+										<tr>
+											<th style="white-space: text-nowrap;text-align:center;width:15%"> دائـن</th>
+											<th style="white-space: text-nowrap;text-align:center;width:15%"> مــــدين</th>
+											<th style="white-space: text-nowrap;text-align:center;width:15%px"> دائـن</th>
+											<th style="white-space: text-nowrap;text-align:center;width15%:"> مــــدين</th>
+											<t t-if="vendor_mode==True">
+											<th style="white-space: text-nowrap;text-align:center;width:15%">    اســــم المورد  </th></t>
+											<t t-if=" vendor_mode==False">
+											<th style="white-space: text-nowrap;text-align:center;width:30%">   اســــم العميل  </th></t>
+											<th style="white-space: text-nowrap;text-align:center;width:10%"> م</th>
+
+
+
+										</tr>
+									</thead>
+									<tbody>	
+			                        
+				                         
+                                       <t t-set="diff_debit" t-value="0"/>
+										<t t-set="diff_credit" t-value="0"/>
+                                        
+										<t t-foreach="list_move" t-as="order">
+										       
+											       
+												
+                                                <tr>
+												<t t-set="diff_debit" t-value="diff_debit+order['debit']-order['credit']"/>
+										<t t-set="diff_credit" t-value="diff_credit+order['credit']-order['debit']"/>
+													 
+													    <t t-if="order['debit'] &gt; order['credit']">
+														 <td style="white-space: text-nowrap;text-align:center;width:15%"> 0</td></t>
+														 <t t-if="order['debit'] &lt; order['credit']">
+														<td style="white-space: text-nowrap;text-align:center;width:15%"><span t-esc="round(order['credit']-order['debit'],3)" /> </td></t> 
+														 
+													     <t t-if="order['debit'] &gt; order['credit']">
+														 <td style="white-space: text-nowrap;text-align:center;width:15%"> <span t-esc="round(order['debit']-order['credit'],3)" /></td></t>
+														<t t-if="order['debit'] &lt; order['credit']">
+														<td style="white-space: text-nowrap;text-align:center;width:15%"> 0</td></t>
+														 
+
+                                                   
+
+												<td style="white-space: text-nowrap;text-align:center;width:15%px"> <span t-esc="round(order['credit'],3)" /></td>
+												<td style="white-space: text-nowrap;text-align:center;width15%:"> <span t-esc="round(order['debit'],3)" /></td>
+												<td style="white-space: text-nowrap;text-align:center;width:30%">   <span t-esc="order['partner']" /> </td>
+												<td style="white-space: text-nowrap;text-align:center;width:10%"> <span t-esc="order['count']" /></td>
+												
+                                                    
+													</tr>
+													
+										
+
+							</t>
+							<tr>
+													 
+													    <t t-if="diff_debit &lt;0">
+														 <td style="white-space: text-nowrap;text-align:center;width:15%"> </td></t>
+                                                        <t t-if="diff_debit &gt;0">
+														<td style="white-space: text-nowrap;text-align:center;width:15%"><b><span t-esc="round(diff_debit,3)" /> </b></td></t>
+														<t t-if="diff_credit &gt;0">
+													
+														 <td style="white-space: text-nowrap;text-align:center;width:15%"> <b><span t-esc="round(diff_credit,3)" /></b></td></t>
+                                                         <t t-if="diff_credit &lt;0">
+														<td style="white-space: text-nowrap;text-align:center;width:15%"> </td>
+														</t>
+
+                                                   
+
+												<td style="white-space: text-nowrap;text-align:center;width:15%px"> </td>
+												<td style="white-space: text-nowrap;text-align:center;width15%:"> </td>
+												<td style="white-space: text-nowrap;text-align:center;width:30%">    </td>
+												<td style="white-space: text-nowrap;text-align:center;width:10%"> </td>
+												
+                                                    
+													</tr>
+							
+							</tbody>
+								</table>
+							</t>
+						</div>
+					</div>
+				</t>
+
+			
+		</t>
+	</template>
+ 
+
+</odoo>

@@ -1,0 +1,41 @@
+<openerp>
+    <data noupdate="0">
+        <menuitem name="الشيـــكات" id="default_norm_pay_menu" parent="account.menu_finance_entries_accounting_entries"
+                  action="check_action_norm_pay_action" sequence="10"
+                    groups="account.group_account_manager"/>
+
+        <menuitem name="الشيكات" id="native_check_main_menu" parent="account.menu_finance_entries_accounting_entries" sequence="20"
+                    groups="account.group_account_manager"/>
+        <menuitem name="الشيكات المستلمة" id="native_checks_menu_receive" parent="native_check_main_menu" sequence="100"
+                    groups="account.group_account_manager"/>
+        <menuitem name="الشيكات المدفوعة" id="native_checks_menu_paid" parent="native_check_main_menu" sequence="200"
+                    groups="account.group_account_manager"/>
+
+       
+        <menuitem name="شيكات الخزنة " id="native_holding_checks" parent = "native_checks_menu_receive" action="native_check_holding_action" sequence="3"
+                    groups="account.group_account_manager"/>
+        <menuitem name="شيكات تحت التحصيل" id="native_depoisted_checks" parent = "native_checks_menu_receive" action="native_check_depoisted_action" sequence="4"
+                    groups="account.group_account_manager"/>
+        <menuitem name="الشيكات المعتمدة" id="native_approved_checks" parent = "native_checks_menu_receive" action="native_check_approved_action" sequence="5"
+                    groups="account.group_account_manager"/>
+        <menuitem name="الشيكات المرفوضة" id="native_rejected_checks" parent = "native_checks_menu_receive" action="native_check_rejected_action" sequence="6"
+                    groups="account.group_account_manager"/>
+        <menuitem name="الشيكات المرتجعة" id="native_returned_checks" parent = "native_checks_menu_receive" action="native_check_returned_action" sequence="7"
+                    groups="account.group_account_manager"/>
+        <!--<menuitem name="Canceled Checks" id="native_canceled_checks" parent = "native_checks_menu_receive" action="native_check_canceled_action" sequence="8"/>-->
+        <menuitem name="الشيكات المرتجعة للعميل" id="native_csreturned_checks" parent = "native_checks_menu_receive" action="native_check_csreturned_action" sequence="9"
+                    groups="account.group_account_manager"/>
+        <menuitem name="جميع الشيكات مستحقة القبض" id="native_all_rece_checks" parent = "native_checks_menu_receive" action="native_check_rece_action" sequence="12"
+                    groups="account.group_account_manager"/>
+
+        <menuitem name="شيكات صادرة" id="native_handed_checks" parent = "native_checks_menu_paid" action="native_check_handed_action" sequence="10"
+                    groups="account.group_account_manager"/>
+        <menuitem name="الشيكات المدينه" id="native_debited_checks" parent = "native_checks_menu_paid" action="native_check_debited_action" sequence="11"
+                    groups="account.group_account_manager"/>
+
+         <menuitem name="جميع الشيكات مستحقة الدفع" id="native_all_pay_checks" parent = "native_checks_menu_paid" action="native_check_pay_action" sequence="13"
+                    groups="account.group_account_manager"/>
+        
+    </data>
+</openerp>
+

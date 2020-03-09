@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="action_report_tota_size_sales_bar_customer"
+            model="total.size.sales"
+            string="Total Size Sale bar Product  Report"
+            report_type="qweb-pdf"
+            name="total_sales_product.total_size_sales_bar_product"
+            file="total_sales_product.total_size_sales_bar_product"
+            />
+    </data>
+</odoo>

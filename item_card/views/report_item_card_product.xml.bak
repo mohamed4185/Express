@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="item_card_product">
+       <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <br/>
+                
+                    
+					<t t-if="data_check==True">
+						<p class="text-center">
+							<br/>
+							<br/>
+					
+							<b>لا يــوجد بيانــات </b>
+						</p>
+					</t>
+               
+                 
+                <div class="text-right">
+                    
+                        
+                            <t t-set="product_category" t-value="[]"/>
+							<t t-set="product_list" t-value="[]"/>
+                            <t t-set="customer_list" t-value="[]"/>
+							<t t-set="total" t-value="0"/>
+
+								<t t-foreach="stock_pinking" t-as="l">
+
+									  
+									  <t t-set="product_list" t-value="product_list+[l['product_id']]"/>
+									  
+								</t>
+								<t t-if="data_check==False">
+								        <table align="right" class="table table-bordered">
+													<thead>
+														<tr>
+														   <th  style="white-space: text-nowrap;text-align:center">المبلغ</th>
+														   <th  style="white-space: text-nowrap;text-align:center">  سعر الوحده</th> 
+														   <th  style="white-space: text-nowrap;text-align:center"> الكميه المنصرفه</th>
+														   
+														   
+															<th style="white-space: text-nowrap;text-align:center"> اسم الصنف </th>
+															<th  style="white-space: text-nowrap;text-align:center" > م</th>
+															
+															
+															
+														</tr>
+													</thead>
+													<tbody>
+                                         <t t-set="all_total_qty" t-value="0"/>
+										<t t-set="all_total_price" t-value="0"/>
+										<t t-set="i" t-value="0"/>
+										<t t-foreach="set(product_list)" t-as="product">
+                                                
+													<t t-set="total_qty" t-value="0"/>
+													<t t-set="total_qty_out" t-value="0"/>
+												 
+													
+											
+											       <t t-set="total" t-value="0"/>
+													<t t-set="total_qty" t-value="0"/>
+													<t t-set="count_invoice" t-value="0"/>
+										
+											<t t-foreach="stock_pinking" t-as="order">
+                                                
+												<t t-if="product==order['product_id'] ">
+													<t t-set="total" t-value="total+order['total']"/>
+													<t t-set="total_qty" t-value="total_qty+order['quantity']"/>
+													<t t-set="total_qty_out" t-value="total_qty+order['qty_out']"/>
+													 
+													   
+											
+											    </t>
+										 
+												
+											 
+										</t>
+										<t t-set="i" t-value="i+1"/>
+                                         <t t-set="all_total_qty" t-value="all_total_qty+total_qty"/>
+													<t t-set="all_total_price" t-value="all_total_price+total"/>
+										<tr>
+												 <td style="white-space: text-nowrap;text-align:center">
+															 <span t-esc="round(total,3)" />
+														</td>
+										       			 
+												        <td style="white-space: text-nowrap;text-align:center">
+															 <span t-esc="round(total/total_qty,3)" />
+														</td>
+														
+														 
+														 
+														 <td style="white-space: text-nowrap;text-align:center">
+															 <span t-esc="round(total_qty,3)" />
+														</td>
+														
+														 <td>
+															<span t-esc="product" />
+														</td>
+														<td>
+															<span t-esc="i" />
+														</td>
+												</tr>
+												
+                                        
+										</t>
+									<tr>
+							      
+										 <td   style="white-space: text-nowrap;text-align:center">
+											<b><span t-esc="round(all_total_price,3)" /></b>
+										</td>
+									 
+										 <td></td>
+										<td style="white-space: text-nowrap;text-align:center"><b><span t-esc="round(all_total_qty,3)" /></b></td>
+									    
+										<td style="white-space: text-nowrap;text-align:center" colspan="2"><b> الاجمالي</b></td>
+										 
+								
+                                   </tr>-->
+
+                        </tbody>
+						
+					 	
+                    </table>
+					
+					</t>
+					 
+                </div>
+            </t>
+        </t>
+    </template>
+	 
+</odoo>

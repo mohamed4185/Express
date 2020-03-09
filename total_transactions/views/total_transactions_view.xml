@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="action_report_total_transactions"
+            model="total.transactions"
+            string="كشف وارد وصادر خزينه "
+            report_type="qweb-pdf"
+            name="total_transactions.total_transactions_report"
+            file="total_transactions.total_transactions_report"
+            />
+            <report 
+            id="action_report_total_debit_transactions"
+            model="total.transactions"
+            string="كشف وارد خزينه "
+            report_type="qweb-pdf"
+            name="total_transactions.total_debit_transactions_report"
+            file="total_transactions.total_debit_transactions_report"
+            />
+            <report 
+            id="action_report_total_credit_transactions"
+            model="total.transactions"
+            string="كشف صادر خزينه "
+            report_type="qweb-pdf"
+            name="total_transactions.total_credit_transactions_report"
+            file="total_transactions.total_credit_transactions_report"
+            />
+    </data>
+</odoo>

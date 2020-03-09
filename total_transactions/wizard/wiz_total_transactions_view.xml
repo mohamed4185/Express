@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="wiz_total_transactions_view" model="ir.ui.view">
+		<field name="name">wiz_total_transactions_view</field>
+		<field name="model">total.transactions</field>
+		<field name="arch" type="xml">
+			<form>
+				  <sheet>
+					<div class="oe_title">
+						<h1>كشــف وارد و صادر خزينه</h1>
+					</div>
+					<br/>
+				<group col="4">
+					<field name="date_from" />
+					<field name="date_to" />
+				</group>
+				<group>
+					<field name="journal_id"/>
+				</group>
+				 <!-- <group>
+					<field name="account_id"/>
+				</group>	-->			  			  		 
+				<footer>
+					<button name="check_report" string="طباعــه الكل" type="object" default_focus="1" class="oe_highlight" />
+					-
+					<button name="check_debit_report" string="طباعة وارد " type="object" default_focus="1" class="oe_highlight" />
+					-
+					<button name="check_credit_report" string="طباعة منصرف" type="object" default_focus="1" class="oe_highlight" />
+					or
+					<button string="Cancel" class="oe_link" special="cancel" />
+				</footer>
+				  </sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_total_transactions_view_wizard" model="ir.actions.act_window">
+		<field name="name"> كشــف وارد و صادر خزينه</field>
+		<field name="res_model">total.transactions</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="wiz_total_transactions_view"/>
+		<!--<field name="target">new</field>-->
+		<field name="target">inline</field>
+	</record>
+
+	
+
+</odoo>

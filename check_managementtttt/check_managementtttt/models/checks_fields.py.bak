@@ -1,0 +1,314 @@
+@api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False,submenu=False):
+        res = super(check_management, self).fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar,submenu=submenu)
+        _logger.info('MENU SENT')
+        _logger.info(res)
+        _logger.info(self.check_type)
+         
+        if 'fields' in res:
+            if 'state' in res['fields']:
+                if 'menu_sent' in self.env.context:
+                    """if self.env.context['menu_sent'] in ('handed','debited'):
+                        _logger.info('HANDED OR DEBITED')
+
+                        res['fields']['state']['selection'] = [('handed', 'Handed'), ('debited', 'Debited')]
+                        if self.env.context['lang'] == 'ar_SY':
+                            res['fields']['state']['selection'] = [('handed', 'مسلمة'), ('debited', 'محصلة')]
+                    else:
+                        res['fields']['state']['selection'] = [('holding', 'Holding'), ('depoisted', 'Depoisted'), ('approved', 'Approved'),
+                                                               ('rejected', 'Rejected'), ('returned', 'Returned'),('canceled', 'Canceled')
+                                                               ,('cs_return','Customer Returned')]
+                        if self.env.context['lang'] == 'ar_SY':
+                            res['fields']['state']['selection'] = [('holding', 'قابضة'), ('depoisted', 'مودعة'),
+                                                                   ('approved', 'خالصة'),('rejected', 'مرفوضة'), ('returned', 'مرتجعة'),
+                                                                   ('canceled', 'ملغله'),('cs_return','مرتجع للعميل')]"""
+
+                    _logger.info('ALL PAYABLE')
+                    _logger.info(res['fields']['state']['selection'])
+        if 'toolbar' in res:
+            user_log=self.env['res.users'].search([('id','=',self.env.uid)]).lang
+
+            if 'menu_sent' in self.env.context:
+                
+
+                if self.env.context['menu_sent'] == 'holding':
+                    if user_log=='ar_SY' or user_log=='ar_AA':
+                        for i in range(len(res['toolbar']['action'])):
+                        if  res['toolbar']['action'][i]['name'] == 'رفض شيــك':
+                            del res['toolbar']['action'][i]
+                            break
+                    for i in range(len(res['toolbar']['action'])):
+                        if  res['toolbar']['action'][i]['name'] == 'ارجاع الشيك للـــشركه':
+                            del res['toolbar']['action'][i]
+                            break
+                    
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name']=='ايـــداع شيــــك':
+                            del res['toolbar']['action'][j]
+                            break
+                if self.env.context['menu_sent'] == 'depoist':
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name']=='تحصيـــــل شيــــك':
+                            del res['toolbar']['action'][j]
+                            break
+                     
+                    for j in range(len(res['toolbar']['action'])):
+                        if  res['toolbar']['action'][j]['name']=="ارجاع الشيك للـــشركه":
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if  res['toolbar']['action'][j]['name']=="ايـــداع شيــــك":
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if  res['toolbar']['action'][j]['name']=="ارجاع الشيك  للعميل ":
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if  res['toolbar']['action'][j]['name']=="تقسيم الشيــــك":
+                            del res['toolbar']['action'][j]
+                            break
+
+
+                    else:
+                        for i in range(len(res['toolbar']['action'])):
+                            if res['toolbar']['action'][i]['name'] == 'Reject Checks':
+                                del res['toolbar']['action'][i]
+                                break
+                        for i in range(len(res['toolbar']['action'])):
+                            if res['toolbar']['action'][i]['name'] == 'Company Return':
+                                del res['toolbar']['action'][i]
+                                break
+                        for i in range(len(res['toolbar']['action'])):
+                            if res['toolbar']['action'][i]['name'] == 'Cancel Checks':
+                                del res['toolbar']['action'][i]
+                                break
+                        for j in range(len(res['toolbar']['action'])):
+                            if res['toolbar']['action'][j]['name'] == 'Debit Checks':
+                                del res['toolbar']['action'][j]
+                                break
+                if self.env.context['menu_sent'] == 'depoist':
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Depoist Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Cancel Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Company Return':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Debit Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Customer Return':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Split-Merge':
+                            del res['toolbar']['action'][j]
+                            break
+                if self.env.context['menu_sent'] == 'approved':
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Depoist Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Approve Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Cancel Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Reject Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Company Return':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Debit Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Customer Return':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Split-Merge':
+                            del res['toolbar']['action'][j]
+                            break
+                if self.env.context['menu_sent'] == 'rejected':
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Depoist Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Reject Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Cancel Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Debit Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Customer Return':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Split-Merge':
+                            del res['toolbar']['action'][j]
+                            break
+                if self.env.context['menu_sent'] == 'returned':
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Reject Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Company Return':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Cancel Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Debit Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                if self.env.context['menu_sent'] == 'handed':
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Approve Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Reject Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Company Return':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Cancel Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Depoist Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Customer Return':
+                            del res['toolbar']['action'][j]
+                            break
+                if self.env.context['menu_sent'] == 'debited':
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Approve Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Reject Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Company Return':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Cancel Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Depoist Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Debit Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Customer Return':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Split-Merge':
+                            del res['toolbar']['action'][j]
+                            break
+                if self.env.context['menu_sent'] == 'canceled':
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Approve Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Reject Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Company Return':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Cancel Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Depoist Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Debit Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Customer Return':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Split-Merge':
+                            del res['toolbar']['action'][j]
+                            break
+                if self.env.context['menu_sent'] == 'cs_return':
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Approve Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Reject Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Company Return':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Cancel Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Depoist Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Debit Checks':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Customer Return':
+                            del res['toolbar']['action'][j]
+                            break
+                    for j in range(len(res['toolbar']['action'])):
+                        if res['toolbar']['action'][j]['name'] == 'Split-Merge':
+                            del res['toolbar']['action'][j]
+                            break
+        return res

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="action_report_product_move"
+            model="periodical.report.purchase"
+            string= "كارت الصنف"
+            report_type="qweb-pdf"
+            name="product_move.report_product_move"
+            file="product_move.report_product_move"
+			attachment_use="True"
+            />
+    </data>
+</odoo>

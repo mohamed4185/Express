@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="wiz_periodical_report_view_purchse" model="ir.ui.view">
+		<field name="name">wiz_periodical_report_view_purchse</field>
+		<field name="model">periodical.report.purchase</field>
+		<field name="arch" type="xml">
+			<form>
+				<!--<group col="4">
+					<field name="period"  />
+					<field name="state" />
+				</group>
+				Or-->
+				<group col="4">
+					<field name="date_from" />
+					<field name="date_to" />
+				</group>
+				<group>
+				  <field name="vendor"/>
+				</group>
+				<footer>
+					<button name="check_report" string="Print" type="object" default_focus="1" class="oe_highlight" />
+					or
+					<button string="Cancel" class="oe_link" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+	<record id="action_periodical_report_purchase" model="ir.actions.act_window">
+		<field name="name">بيان بالتوريدات اليوميه</field>
+		<field name="res_model">periodical.report.purchase</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="wiz_periodical_report_view_purchse"/>
+		<!--<field name="target">new</field>-->
+		<field name="target">inline</field>
+	</record>
+
+	 <!--<menuitem id="menu_purchase_periodical_report"
+                  name="بيان بالتوريدات اليومية"
+                  action="action_periodical_report_purchase"
+                  parent="sale.menu_sale_report"
+                  sequence="1"/>-->
+
+</odoo>

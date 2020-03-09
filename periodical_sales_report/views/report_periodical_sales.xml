@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_periodical_sales">
+        <t t-call="web.html_container">
+            <t t-set="date" t-value="[]"/>
+            <t t-set="customer_list" t-value="[]"/>
+            <t t-set="total_purchase_price" t-value="0"/>
+            <t t-set="total_purchase" t-value="0"/>
+            <t t-set="lenght" t-value="0"/>
+            <t t-foreach="sale_orders" t-as="l">
+                <t t-set="date" t-value="date+[l['date_order']]"/>
+                <t t-set="customer_list" t-value="customer_list+[l['partner']]"/>
+            </t>
+
+            <t t-if="data_check==True">
+                <t t-call="web.external_layout">
+
+                    <div class="page">
+                        <br></br>
+                        <p class="text-center">لا يــوجــد مبيعــــات </p>
+                    </div>
+                </t>
+            </t>
+			 <t t-if="data_check==False">
+            <t t-call="web.external_layout">
+
+                <div class="page">
+
+                    
+                    <div class="text-right">
+                        <t t-set="total_qty_all" t-value="0"/>
+                        <t t-set="total_price_all" t-value="0"/>
+                        <t t-foreach="dates" t-as="category">
+                            <t t-set="total_qty_daily" t-value="0"/>
+                            <t t-set="total_price_daily" t-value="0"/>
+                            <t t-foreach="set(customer_list)" t-as="customer">
+                                <t t-set="total" t-value="0"/>
+                                <t t-set="total_qty" t-value="0"/>
+                                <t t-set="i" t-value="0"/>
+                                <t t-set="code" t-value="0"/>
+                                <t t-set="check" t-value="False"/>
+                                <t t-foreach="sale_orders" t-as="order">
+                                    <t t-if="category==order['date_order'] and customer==order['partner'] and i==0 ">
+                                        <t t-set="check" t-value="True"/>
+                                        <t t-set="code" t-value="order['code']"/>
+                                    </t>
+                                </t>
+                                <t t-if="check==True">
+
+                                    <table align="right" class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                
+                                                <th class="text-right" colspan="7" style="white-space: text-nowrap;width:35%;border-top:0px;border-right:0px;border-left:0px;border-top:0px">
+                                                    <div>
+                                                        <strong class="text-right"> تاريخ اليوم: </strong>
+                                                        <strong  t-esc="category"/>
+                                                    </div>
+
+                                                    <div>
+                                                        <strong class="text-right"> &#160;&#160; اسم العميل:  </strong>
+                                                        <strong dir="rtl"  t-esc="customer"/>
+                                                    </div>
+
+                                                    <t t-if="code!=0">
+                                                        <div>
+                                                            <strong class="text-right">&#160;&#160; رقم العميل: </strong>
+                                                            <strong class="text-right" t-esc="code"/>
+                                                        </div>
+                                                    </t>
+                                                </th>
+                                              
+                                            </tr>
+
+                                            <tr>
+                                                <th style="white-space: text-nowrap;text-align:center;width:10%">ملاحظــــات</th>
+                                                <th style="white-space: text-nowrap;text-align:center;width:10%">إجمالي</th>
+                                                <th style="white-space: text-nowrap;text-align:center;width:10%">قيمة الوحدة</th>
+                                                <th style="white-space: text-nowrap;text-align:center;width:10%">طن</th>
+                                                <th style="white-space: text-nowrap;text-align:center;width:10%">رقم الطلب</th>
+                                                <th style="white-space: text-nowrap;text-align:center;width:35%">الصنف</th>
+                                                <th style="white-space: text-nowrap;text-align:center;width:5%">م</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="sale_orders" t-as="order">
+                                                <t t-if="category==order['date_order'] and customer==order['partner'] ">
+                                                    <t t-set="i" t-value="i+1"/>
+                                                    <td style="white-space: text-nowrap;text-align:center">
+                                                        <span t-esc="order['note_sale']" />
+                                                    </td>
+                                                    <td style="white-space: text-nowrap;text-align:center">
+                                                        <span t-esc="round(order['total'],3)" />
+                                                    </td>
+                                                    <td style="white-space: text-nowrap;text-align:center">
+                                                        <span t-esc="order['price_unit']" />
+                                                    </td>
+                                                    <td style="white-space: text-nowrap;text-align:center">
+                                                        <span t-esc="round(order['quantity'],3)" />
+                                                    </td>
+                                                    <td style="white-space: text-nowrap;text-align:center">
+                                                        <span t-esc="order['order_id']" />
+                                                    </td>
+                                                    <td style="white-space: text-nowrap;text-align:center">
+                                                        <span t-esc="order['name']" />
+                                                    </td>
+                                                    <td style="white-space: text-nowrap;text-align:center">
+                                                        <span t-esc="i" />
+                                                    </td>
+                                                    <t t-set="total" t-value="total+order['total']"/>
+                                                    <t t-set="total_qty" t-value="total_qty+order['quantity']"/>
+                                                </t>
+                                            </tr>
+                                            <tr>
+                                                <td style="width:105"></td>
+                                                <t t-set="total_qty_daily" t-value="total_qty_daily+total_qty"/>
+                                                <t t-set="total_price_daily" t-value="total_price_daily+total"/>
+                                                <td style="white-space: text-nowrap;text-align:center;;width:10px">
+                                                    <b>
+                                                        <span t-esc="round(total,3)" />
+                                                    </b>
+                                                </td>
+                                                <td style="width:10%"></td>
+                                                <td style="white-space: text-nowrap;text-align:center;width:10%">
+                                                    <b>
+                                                        <span t-esc="round(total_qty,3)" />
+                                                    </b>
+                                                </td>
+                                                <td style="width:10%"></td>
+                                                <td style="white-space: text-nowrap;text-align:center;width:35%">
+                                                    <b>اجمالي علي مستوي العميل </b>
+                                                </td>
+                                                <t t-set="total_purchase_price" t-value="total_purchase_price+total"/>
+                                                <t t-set="total_purchase" t-value="total_purchase+total_qty"/>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </t>
+
+
+                            </t>
+                            <t t-set="total_qty_all" t-value="total_qty_all+total_qty_daily"/>
+                            <t t-set="total_price_all" t-value="total_price_all+total_price_daily"/>
+							<t t-if="total_qty_daily">
+                            <table align="right" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="white-space: text-nowrap;text-align:center;width:10%">
+
+                                        </th>
+                                        <th style="white-space: text-nowrap;text-align:center;width:10%">
+                                            <b>
+                                                <span t-esc="round(total_price_daily,3)" />
+                                            </b>
+                                        </th>
+                                        <th style="white-space: text-nowrap;text-align:center;width:10%">
+
+                                        </th>
+                                        <th style="white-space: text-nowrap;text-align:center;width:10%">
+                                            <b>
+                                                <span t-esc="round(total_qty_daily,3)" />
+                                            </b>
+                                        </th>
+                                        <th style="white-space: text-nowrap;text-align:center;width:10%">
+
+                                        </th>
+                                        <!--<th style="white-space: text-nowrap;text-align:center;width:65px"></th>-->
+                                        <th style="white-space: text-nowrap;text-align:center;width:35%">
+                                            <b>اجمالي علي مستوي اليوم </b>
+                                        </th>
+                                        <th style="white-space: text-nowrap;text-align:center;width:10%;border-left:0px">
+
+                                        </th>
+                                        <!--<th style="white-space: text-nowrap;text-align:center;width:65px"></th>-->
+                                    </tr>
+                                </thead>
+                            </table></t>
+
+                        </t>
+                        <table align="right" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="white-space: text-nowrap;text-align:center;width:10%">
+
+                                    </th>
+                                    <th style="white-space: text-nowrap;text-align:center;width:10%">
+                                        <b>
+                                            <span t-esc="round(total_price_all,3)" />
+                                        </b>
+                                    </th>
+                                    <th style="white-space: text-nowrap;text-align:center;width:10%">
+
+                                    </th>
+                                    <th style="white-space: text-nowrap;text-align:center;width:10%">
+                                        <b>
+                                            <span t-esc="round(total_qty_all,3)" />
+                                        </b>
+                                    </th>
+                                    <th style="white-space: text-nowrap;text-align:center;width:10%">
+
+                                    </th>
+                                    <!--<th style="white-space: text-nowrap;text-align:center;width:65px"></th>-->
+                                    <th style="white-space: text-nowrap;text-align:center;width:35%">
+                                        <b>اجمالي </b>
+                                    </th>
+                                    <th style="white-space: text-nowrap;text-align:center;width:10%;border-left:0px">
+
+                                    </th>
+                                    <!--<th style="white-space: text-nowrap;text-align:center;width:65px"></th>-->
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </t></t>
+        </t>
+    </template>
+</odoo>

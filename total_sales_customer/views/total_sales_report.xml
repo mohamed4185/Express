@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="action_report_tota_size_sales_bar_customer"
+            model="total.sales.bar.customer"
+            string="بيان بالعملاء المتعامل  معهم علي مستوي صنف"
+            report_type="qweb-pdf"
+            name="total_sales_customer.total_size_sales_bar_customer"
+            file="total_sales_customer.total_size_sales_bar_customer"
+            />
+    </data>
+</odoo>

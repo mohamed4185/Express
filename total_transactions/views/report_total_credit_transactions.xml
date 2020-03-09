@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="total_credit_transactions_report">
+		<t t-call="web.html_container">
+			<div class="page">
+				
+				<t t-set="all_total_qty" t-value="0" />
+				<t t-set="all_total_price" t-value="0" />
+				<t t-set="i" t-value="0" />
+				<t t-call="web.external_layout">
+					<div class="page">
+						<div class="text-right">
+							<t t-if="data_check==True">
+								<p class="text-center">
+									<br>
+									</br>
+									<b>
+										لا يوجــد بيانـــــات
+									</b>
+								</p>
+							</t>
+						</div>
+					</div>
+				</t>
+				<t t-call="web.external_layout">
+					<div class="page">
+						<br>
+						</br>
+						<div>
+							<t t-if="data_check==False">
+								
+								<table align="right" style="float: left;black;border-top: 1px solid black;width:100%">
+									<thead>
+										<tr>
+											<th style="border: 1px solid black;white-space: text-nowrap;text-align:center;width:100px">
+												المبلـــغ
+											</th>
+											<th style="border: 1px solid black;white-space: text-nowrap;text-align:center;width:100px">
+												تـــــاريخ  الحركة
+											</th>
+											<th style="border: 1px solid black;white-space: text-nowrap;text-align:center;width:50px">
+												البيــــان
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<t t-set="credit_total_price" t-value="0" />
+										<t t-set="total_qty" t-value="0" />
+										<t t-set="i" t-value="0" />
+										<t t-foreach="credit_list" t-as="credit_list">
+											<t t-set="credit_total_price" t-value="credit_total_price+credit_list['Amount']"/>
+											<tr>
+												<td style="border: 1px solid black;white-space: text-nowrap;text-align:center;width:100px ">
+													<span t-esc="credit_list['Amount']" />
+												</td>
+												<td style="border: 1px solid black;white-space: text-nowrap;text-align:center;width:100px ">
+													<span t-esc="credit_list['date']" />
+												</td>
+												<td style="border: 1px solid black;white-space: text-nowrap;text-align:center ;width:70px">
+													<span t-esc="credit_list['rerference']" />
+												</td>
+											</tr>
+										</t>
+										<tr>
+											<td style="border: 1px solid black;white-space: text-nowrap;text-align:center;width:100px ">
+													<strong><span t-esc="round(credit_total_price,3)" /></strong>
+											</td>
+											<td style="border: 1px solid black;white-space: text-nowrap;text-align:center;width:100px ">
+											</td>
+											<td style="border: 1px solid black;white-space: text-nowrap;text-align:center ;width:70px">
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</t>
+						</div>
+					</div>
+				</t>
+			</div>
+		</t>
+	</template>
+	<record id="total_transactions.action_report_total_credit_transactions" model="ir.actions.report">
+		<field name="paperformat_id" ref="move_product_in_to_out.paperformat_lowmargin" />
+	</record>
+</odoo>
